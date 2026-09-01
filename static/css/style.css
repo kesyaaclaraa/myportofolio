@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1c1917;
+    background-color: #faf6f0;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.site-header {
+    border-bottom: 1px solid #e3d9c9;
+    padding: 1.25rem 0;
+}
+
+.site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #1c1917;
+    text-decoration: none;
+}
+
+nav a {
+    margin-left: 1.5rem;
+    color: #1c1917;
+    text-decoration: none;
+}
+
+.hero {
+    padding: 4rem 0 2rem;
+}
+
+.hero-kicker {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #d95d39;
+    font-weight: bold;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin: 0.5rem 0;
+}
+
+.profile-meta {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #efe7db;
+    border-radius: 6px;
+}
+
+.projects {
+    padding: 2rem 0 4rem;
+}
+
+.project-card {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 6px;
+    border: 1px solid #e3d9c9;
+    margin-top: 1rem;
+}
+
+.site-footer {
+    border-top: 1px solid #e3d9c9;
+    padding: 1.5rem 0;
+    font-size: 0.85rem;
+    color: #6b6459;
+}
