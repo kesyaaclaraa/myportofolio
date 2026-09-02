@@ -30,6 +30,8 @@ h1, .brand {
     margin: 0 auto;
     padding: 0 1.5rem;
 }
+
+/* Header */
 .site-header {
     border-bottom: 1px solid var(--line);
 }
@@ -58,6 +60,8 @@ h1, .brand {
     text-decoration: none;
     font-size: 0.95rem;
 }
+
+/* Hero Section */
 .hero {
     padding: 4.5rem 0 5rem;
 }
@@ -67,7 +71,7 @@ h1, .brand {
     grid-template-columns: 1.3fr 1fr;
     grid-template-areas:
         "identity photo"
-        "details  photo";
+        "details photo";
     gap: 1.5rem 3rem;
 }
 
@@ -139,6 +143,7 @@ h1, .brand {
     background-color: var(--accent);
 }
 
+/* Hero Photo */
 .hero-photo {
     grid-area: photo;
     align-self: center;
@@ -161,11 +166,13 @@ h1, .brand {
     z-index: 1;
     display: block;
     width: 100%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1/1;
     object-fit: cover;
     border-radius: var(--radius);
     border: 3px solid var(--ink);
 }
+
+/* Footer */
 .site-footer {
     padding: 1.5rem;
     color: var(--text-muted);
@@ -173,6 +180,7 @@ h1, .brand {
     border-top: 1px solid var(--line);
 }
 
+/* Responsive (Mobile View) */
 @media (max-width: 600px) {
     .hero-grid {
         grid-template-columns: 1fr;
