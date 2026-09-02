@@ -30,7 +30,6 @@ h1, .brand {
     margin: 0 auto;
     padding: 0 1.5rem;
 }
-
 .site-header {
     border-bottom: 1px solid var(--line);
 }
@@ -59,7 +58,6 @@ h1, .brand {
     text-decoration: none;
     font-size: 0.95rem;
 }
-
 .hero {
     padding: 4.5rem 0 5rem;
 }
@@ -168,7 +166,6 @@ h1, .brand {
     border-radius: var(--radius);
     border: 3px solid var(--ink);
 }
-
 .site-footer {
     padding: 1.5rem;
     color: var(--text-muted);
