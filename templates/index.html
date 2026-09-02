@@ -1,61 +1,61 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kesya Clara - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-
-    <!-- Header & Navigasi Utama -->
     <header class="site-header">
         <div class="container">
-            <a href="#" class="brand">Kesya Clara</a>
+            <a href="#profile" class="brand">Kesya Clara</a>
             <nav>
-                <a href="#about">Tentang</a>
-                <a href="#projects">Proyek</a>
-                <a href="#contact">Kontak</a>
+                <a href="#profile">Profile</a>
             </nav>
         </div>
     </header>
 
-    <!-- Konten Utama -->
     <main>
-        <!-- Section: Intro / Profile -->
-        <section id="about" class="hero">
-            <div class="container">
-                <p class="hero-kicker">Ilmu Komputer &middot; Universitas Indonesia</p>
-                <h1>Kesya Clara</h1>
-                <p class="bio">Mahasiswa Ilmu Komputer Universitas Indonesia yang tertarik pada web development dan pemrograman platform.</p>
-                
-                <div class="profile-meta">
-                    <p><strong>NPM:</strong> 2506656892</p>
-                    <p><strong>Program:</strong> S1 Ilmu Komputer</p>
+        <section class="hero" id="profile">
+            <div class="container hero-grid">
+                <div class="hero-identity">
+                    <p class="hero-kicker">Computer Science &middot; Universitas Indonesia</p>
+                    <h1>Kesya Clara</h1>
                 </div>
-            </div>
-        </section>
-
-        <!-- Section: List Proyek (Menggunakan Article) -->
-        <section id="projects" class="projects">
-            <div class="container">
-                <h2>Proyek Saya</h2>
-                <div class="project-grid">
-                    <article class="project-card">
-                        <h3>Tutorial 01 - HTML & CSS</h3>
-                        <p>Membuat struktur web portofolio dengan HTML5 semantic dan styling CSS3.</p>
-                    </article>
+                <div class="hero-photo">
+                    <div class="photo-block"></div>
+                    <img class="avatar" src="/static/img/profile.png" alt="Photo of Kesya Clara">
+                </div>
+                <div class="hero-details">
+                    <p class="bio">Halo! Saya mahasiswa Ilmu Komputer Universitas Indonesia yang tertarik dalam pengembangan web dan pemrograman platform.</p>
+                    <dl class="meta-list">
+                        <div class="meta-row">
+                            <dt>NPM</dt>
+                            <dd>2506656892</dd>
+                        </div>
+                        <div class="meta-row">
+                            <dt>Program</dt>
+                            <dd>S1 Ilmu Komputer</dd>
+                        </div>
+                    </dl>
+                    <div class="social-links">
+                        <a href="https://github.com/kesyaaclaraa" class="social-link" target="_blank">GitHub</a>
+                        <a href="https://linkedin.com/" class="social-link" target="_blank">LinkedIn</a>
+                        <a href="mailto:kesyaclara02@gmail.com" class="social-link">Email</a>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer id="contact" class="site-footer">
+    <footer class="site-footer">
         <div class="container">
             <p>&copy; 2026 Kesya Clara. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
         </div>
     </footer>
-
 </body>
 </html>
