@@ -10,7 +10,7 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="#profile" class="brand">Kesya</a>
+            <a href="#profile" class="brand">Kesya Clara Dania</a>
             <nav>
                 <a href="#profile">Profile</a>
                 <a href="#skills">Skills</a>
@@ -20,14 +20,14 @@
     </header>
 
     <main class="container">
-        <!-- Hero / Profile Section -->
-        <section class="hero" id="profile">
+        <!-- Hero Section -->
+        <section class="hero fade-in" id="profile">
             <div class="hero-card">
                 <div class="hero-identity">
                     <span class="kicker">Information Systems Student</span>
                     <h1>Kesya Clara Dania</h1>
                     <p class="bio">
-                        Highly motivated Information Systems student at Universitas Indonesia with hands-on experience in coordinating student events and collaborating with diverse teams[cite: 2]. Passionate about technology, digital transformation, and continuous learning[cite: 2].
+                        Highly motivated Information Systems student at Universitas Indonesia with hands-on experience in coordinating student events and collaborating with diverse teams. Passionate about technology, digital transformation, and continuous learning.
                     </p>
                     <div class="social-links">
                         <a href="mailto:kesyaclara02@gmail.com" class="social-link">Email</a>
@@ -44,7 +44,7 @@
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" style="margin-top: 2rem;">
+        <section id="skills" class="fade-in" style="margin-top: 2rem;">
             <h2 class="section-title">Skills & Background</h2>
             <div class="skills-grid">
                 <div class="skill-card">
@@ -70,17 +70,17 @@
                 <div class="skill-card">
                     <h3>Education</h3>
                     <p style="font-size: 0.9rem; font-weight: 600; color: var(--primary-dark);">Universitas Indonesia</p>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Undergraduate Computer Science (2025 – Present)[cite: 2]</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Undergraduate Computer Science (2025 – Present)</p>
                 </div>
             </div>
         </section>
 
-        <!-- Experience Section with Image Galleries -->
-        <section id="experience" style="margin-top: 2rem;">
+        <!-- Experience Section -->
+        <section id="experience" class="fade-in" style="margin-top: 2rem;">
             <h2 class="section-title">Organizational Experience</h2>
             <div class="experience-list">
 
-                <!-- Exp 1: Compfest 18 -->
+                <!-- Compfest 18 -->
                 <div class="exp-card">
                     <div class="exp-header">
                         <div>
@@ -90,16 +90,18 @@
                         <span class="exp-date">Jan 2026 – Present</span>
                     </div>
                     <ul class="exp-bullets">
-                        <li>Led the planning and execution of food and beverage operations for committee activities and event days[cite: 2].</li>
-                        <li>Coordinated with vendors and internal divisions to manage procurement and logistics efficiently[cite: 2].</li>
-                        <li>Oversaw budgeting and inventory while ensuring smooth operations and timely delivery[cite: 2].</li>
+                        <li>Led the planning and execution of food and beverage operations for committee activities and event days.</li>
+                        <li>Coordinated with vendors and internal divisions to manage procurement and logistics efficiently.</li>
+                        <li>Oversaw budgeting and inventory while ensuring smooth operations and timely delivery.</li>
                     </ul>
                     <div class="exp-gallery">
-                        <img src="{% static 'img/experience/compfest.jpg' %}" alt="FnB Compfest 18 Activity">
+                        <div class="img-container">
+                            <img src="{% static 'img/experience/compfest.jpg' %}" alt="FnB Compfest 18 Activity">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Exp 2: UI SDG Summit -->
+                <!-- UI SDG Summit -->
                 <div class="exp-card">
                     <div class="exp-header">
                         <div>
@@ -113,11 +115,13 @@
                         <li>Facilitated coordination between committee divisions and external partners to maintain seamless operations.</li>
                     </ul>
                     <div class="exp-gallery">
-                        <img src="{% static 'img/experience/sdgsummit.jpg' %}" alt="UI SDG Summit Activity">
+                        <div class="img-container">
+                            <img src="{% static 'img/experience/sdgsummit.jpg' %}" alt="UI SDG Summit Activity">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Exp 3: Open House Fasilkom UI -->
+                <!-- Open House Fasilkom UI -->
                 <div class="exp-card">
                     <div class="exp-header">
                         <div>
@@ -127,16 +131,18 @@
                         <span class="exp-date">Aug 2025 – Present</span>
                     </div>
                     <ul class="exp-bullets">
-                        <li>Served as primary point of contact between participants and organizing committee[cite: 2].</li>
-                        <li>Coordinated participant schedules, logistics, and event activities to ensure smooth execution[cite: 2].</li>
-                        <li>Assisted participants by addressing inquiries, resolving issues, and providing on-site support[cite: 2].</li>
+                        <li>Served as primary point of contact between participants and organizing committee.</li>
+                        <li>Coordinated participant schedules, logistics, and event activities to ensure smooth execution.</li>
+                        <li>Assisted participants by addressing inquiries, resolving issues, and providing on-site support.</li>
                     </ul>
                     <div class="exp-gallery">
-                        <img src="{% static 'img/experience/openhouse.jpg' %}" alt="Open House Fasilkom UI Activity">
+                        <div class="img-container">
+                            <img src="{% static 'img/experience/openhouse.jpg' %}" alt="Open House Fasilkom UI Activity">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Exp 4: Gelar Karya UI -->
+                <!-- Gelar Karya UI -->
                 <div class="exp-card">
                     <div class="exp-header">
                         <div>
@@ -146,15 +152,17 @@
                         <span class="exp-date">Sep 2025 – Nov 2025</span>
                     </div>
                     <ul class="exp-bullets">
-                        <li>Collaborated with cross-functional teams to manage event logistics, schedules, and participant coordination[cite: 2].</li>
-                        <li>Monitored event progress and resolved operational issues to support successful event delivery[cite: 2].</li>
+                        <li>Collaborated with cross-functional teams to manage event logistics, schedules, and participant coordination.</li>
+                        <li>Monitored event progress and resolved operational issues to support successful event delivery.</li>
                     </ul>
                     <div class="exp-gallery">
-                        <img src="{% static 'img/experience/gelarkarya.jpg' %}" alt="Gelar Karya UI Activity">
+                        <div class="img-container">
+                            <img src="{% static 'img/experience/gelarkarya.jpg' %}" alt="Gelar Karya UI Activity">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Exp 5: SDGs Forum FPU -->
+                <!-- SDGs Forum FPU -->
                 <div class="exp-card">
                     <div class="exp-header">
                         <div>
@@ -164,10 +172,12 @@
                         <span class="exp-date">March 2025</span>
                     </div>
                     <ul class="exp-bullets">
-                        <li>Took part in discussions and workshops on Sustainable Development Goals, gaining insights into global issues and collaborative solutions[cite: 2].</li>
+                        <li>Took part in discussions and workshops on Sustainable Development Goals, gaining insights into global issues and collaborative solutions.</li>
                     </ul>
                     <div class="exp-gallery">
-                        <img src="{% static 'img/experience/sdgs.jpg' %}" alt="SDGs Forum FPU Activity">
+                        <div class="img-container">
+                            <img src="{% static 'img/experience/sdgs.jpg' %}" alt="SDGs Forum FPU Activity">
+                        </div>
                     </div>
                 </div>
 
@@ -177,7 +187,7 @@
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Kesya Clara Dania. Faculty of Computer Science, Universitas Indonesia[cite: 2].</p>
+            <p>&copy; 2026 Kesya Clara Dania. Faculty of Computer Science, Universitas Indonesia.</p>
         </div>
     </footer>
 </body>
