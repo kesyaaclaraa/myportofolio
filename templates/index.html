@@ -5,18 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kesya Clara Dania - Portfolio</title>
-    
-    <!-- Google Fonts untuk Editorial & Professional Aesthetic -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@1,400;1,600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="#profile" class="brand">Kesya Clara Dania</a>
+            <a href="#profile" class="brand">Kesya</a>
             <nav>
                 <a href="#profile">Profile</a>
                 <a href="#skills">Skills</a>
@@ -26,56 +20,164 @@
     </header>
 
     <main class="container">
-        <!-- Hero Section -->
+        <!-- Hero / Profile Section -->
         <section class="hero" id="profile">
             <div class="hero-card">
-                <!-- Badges / Accent Tags Formal -->
-                <div class="sticker sticker-top">IS Student &middot; Fasilkom UI</div>
-                <div class="sticker sticker-ribbon">Academic Portfolio</div>
-
                 <div class="hero-identity">
-                    <span class="handwriting-sub">Portfolio & Highlights</span>
+                    <span class="kicker">Information Systems Student</span>
                     <h1>Kesya Clara Dania</h1>
-                    <p class="bio">Information Systems student at Universitas Indonesia. Passionate about modern web development, software engineering, and digital innovation.</p>
-                    
+                    <p class="bio">
+                        Highly motivated Information Systems student at Universitas Indonesia with hands-on experience in coordinating student events and collaborating with diverse teams[cite: 2]. Passionate about technology, digital transformation, and continuous learning[cite: 2].
+                    </p>
                     <div class="social-links">
-                        <a href="https://github.com/kesyaaclaraa" class="social-link" target="_blank">GitHub</a>
-                        <a href="https://linkedin.com/" class="social-link" target="_blank">LinkedIn</a>
                         <a href="mailto:kesyaclara02@gmail.com" class="social-link">Email</a>
+                        <a href="https://github.com/kesyaaclaraa" class="social-link" target="_blank">GitHub</a>
+                        <a href="https://line.me/ti/p/~kesyaaclaraa" class="social-link" target="_blank">LINE</a>
+                        <a href="tel:082126362360" class="social-link">Phone</a>
                     </div>
                 </div>
 
-                <!-- Foto Frame -->
                 <div class="hero-photo-frame">
                     <img src="{% static 'img/kesya.jpg' %}" alt="Photo of Kesya Clara Dania">
-                    <div class="polaroid-label">Kesya Clara Dania</div>
                 </div>
             </div>
         </section>
 
-        <!-- Section Skills / Core Competencies -->
-        <section id="skills" style="margin-top: 3rem;">
-            <h2 style="font-family: var(--font-serif); font-style: italic; font-size: 2.2rem; text-align: center;">Core Competencies & Focus</h2>
+        <!-- Skills Section -->
+        <section id="skills" style="margin-top: 2rem;">
+            <h2 class="section-title">Skills & Background</h2>
             <div class="skills-grid">
                 <div class="skill-card">
-                    <h3>Web Development</h3>
-                    <p>Creating interactive, aesthetic, and responsive web applications using modern tech stacks.</p>
+                    <h3>Technical Skills</h3>
+                    <div class="skill-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Java</span>
+                        <span class="tag">Google Workspace</span>
+                        <span class="tag">Figma</span>
+                        <span class="tag">Canva</span>
+                    </div>
                 </div>
                 <div class="skill-card">
-                    <h3>Information Systems</h3>
-                    <p>Studying system architecture, business analytics, and digital logic design at Fasilkom UI.</p>
+                    <h3>Languages & Interests</h3>
+                    <div class="skill-tags">
+                        <span class="tag">English</span>
+                        <span class="tag">Bahasa Indonesia</span>
+                        <span class="tag">Sports</span>
+                        <span class="tag">Technology</span>
+                        <span class="tag">Volunteering</span>
+                    </div>
                 </div>
                 <div class="skill-card">
-                    <h3>Problem Solving</h3>
-                    <p>Translating complex algorithms and data structures into clean, efficient code solutions.</p>
+                    <h3>Education</h3>
+                    <p style="font-size: 0.9rem; font-weight: 600; color: var(--primary-dark);">Universitas Indonesia</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Undergraduate Computer Science (2025 – Present)[cite: 2]</p>
                 </div>
+            </div>
+        </section>
+
+        <!-- Experience Section with Image Galleries -->
+        <section id="experience" style="margin-top: 2rem;">
+            <h2 class="section-title">Organizational Experience</h2>
+            <div class="experience-list">
+
+                <!-- Exp 1: Compfest 18 -->
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">VPIC</div>
+                            <div class="exp-org">FnB Compfest 18</div>
+                        </div>
+                        <span class="exp-date">Jan 2026 – Present</span>
+                    </div>
+                    <ul class="exp-bullets">
+                        <li>Led the planning and execution of food and beverage operations for committee activities and event days[cite: 2].</li>
+                        <li>Coordinated with vendors and internal divisions to manage procurement and logistics efficiently[cite: 2].</li>
+                        <li>Oversaw budgeting and inventory while ensuring smooth operations and timely delivery[cite: 2].</li>
+                    </ul>
+                    <div class="exp-gallery">
+                        <img src="{% static 'img/experience/compfest.jpg' %}" alt="FnB Compfest 18 Activity">
+                    </div>
+                </div>
+
+                <!-- Exp 2: UI SDG Summit -->
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Human Relations Staff</div>
+                            <div class="exp-org">UI SDG Summit</div>
+                        </div>
+                        <span class="exp-date">2026</span>
+                    </div>
+                    <ul class="exp-bullets">
+                        <li>Managed internal and external stakeholder communications to support event execution and participant engagement.</li>
+                        <li>Facilitated coordination between committee divisions and external partners to maintain seamless operations.</li>
+                    </ul>
+                    <div class="exp-gallery">
+                        <img src="{% static 'img/experience/sdgsummit.jpg' %}" alt="UI SDG Summit Activity">
+                    </div>
+                </div>
+
+                <!-- Exp 3: Open House Fasilkom UI -->
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Expert Staff & Staff - Liaison Officer</div>
+                            <div class="exp-org">Open House Fasilkom UI</div>
+                        </div>
+                        <span class="exp-date">Aug 2025 – Present</span>
+                    </div>
+                    <ul class="exp-bullets">
+                        <li>Served as primary point of contact between participants and organizing committee[cite: 2].</li>
+                        <li>Coordinated participant schedules, logistics, and event activities to ensure smooth execution[cite: 2].</li>
+                        <li>Assisted participants by addressing inquiries, resolving issues, and providing on-site support[cite: 2].</li>
+                    </ul>
+                    <div class="exp-gallery">
+                        <img src="{% static 'img/experience/openhouse.jpg' %}" alt="Open House Fasilkom UI Activity">
+                    </div>
+                </div>
+
+                <!-- Exp 4: Gelar Karya UI -->
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Managing</div>
+                            <div class="exp-org">Gelar Karya UI | BEM Fasilkom UI</div>
+                        </div>
+                        <span class="exp-date">Sep 2025 – Nov 2025</span>
+                    </div>
+                    <ul class="exp-bullets">
+                        <li>Collaborated with cross-functional teams to manage event logistics, schedules, and participant coordination[cite: 2].</li>
+                        <li>Monitored event progress and resolved operational issues to support successful event delivery[cite: 2].</li>
+                    </ul>
+                    <div class="exp-gallery">
+                        <img src="{% static 'img/experience/gelarkarya.jpg' %}" alt="Gelar Karya UI Activity">
+                    </div>
+                </div>
+
+                <!-- Exp 5: SDGs Forum FPU -->
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Participant</div>
+                            <div class="exp-org">SDGs Forum FPU</div>
+                        </div>
+                        <span class="exp-date">March 2025</span>
+                    </div>
+                    <ul class="exp-bullets">
+                        <li>Took part in discussions and workshops on Sustainable Development Goals, gaining insights into global issues and collaborative solutions[cite: 2].</li>
+                    </ul>
+                    <div class="exp-gallery">
+                        <img src="{% static 'img/experience/sdgs.jpg' %}" alt="SDGs Forum FPU Activity">
+                    </div>
+                </div>
+
             </div>
         </section>
     </main>
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Kesya Clara Dania &middot; Faculty of Computer Science, Universitas Indonesia</p>
+            <p>&copy; 2026 Kesya Clara Dania. Faculty of Computer Science, Universitas Indonesia[cite: 2].</p>
         </div>
     </footer>
 </body>
