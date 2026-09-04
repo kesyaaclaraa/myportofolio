@@ -5,51 +5,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kesya Clara - Portfolio</title>
+    
+    <!-- Google Fonts untuk Scrapbook & Neutral-Chic Style -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@1,400;1,600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="#profile" class="brand">Kesya Clara</a>
+            <a href="#profile" class="brand">✨ Kesya's Portfolio</a>
             <nav>
                 <a href="#profile">Profile</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
             </nav>
         </div>
     </header>
 
-    <main>
+    <main class="container">
+        <!-- Hero Section Scrapbook -->
         <section class="hero" id="profile">
-            <div class="container hero-grid">
+            <div class="hero-card">
+                <!-- Stiker Aksesori Cute -->
+                <div class="sticker sticker-top">★ welcome to my page</div>
+                <div class="sticker sticker-ribbon">🎀 gen-z techie</div>
+
                 <div class="hero-identity">
-                    <p class="hero-kicker">Computer Science &middot; Universitas Indonesia</p>
+                    <span class="handwriting-sub">Hello & Hola! 👋</span>
                     <h1>Kesya Clara</h1>
-                </div>
-
-                <div class="hero-photo">
-                    <div class="photo-block"></div>
-                    <img class="avatar" src="{% static 'img/kesya.jpg' %}" alt="Photo of Kesya Clara">
-                </div>
-
-                <div class="hero-details">
-                    <p class="bio">S1 Computer Science student at Fasilkom UI. Passionate about modern web development, software engineering, and technology innovation.</p>
-                    <dl class="meta-list">
-                        <div class="meta-row">
-                            <dt>NPM</dt>
-                            <dd>2506656892</dd>
-                        </div>
-                        <div class="meta-row">
-                            <dt>Program</dt>
-                            <dd>S1 Ilmu Komputer</dd>
-                        </div>
-                    </dl>
+                    <p class="bio">Information Systems student at Universitas Indonesia. Passionate about modern web development, software engineering, and digital innovation.</p>
+                    
                     <div class="social-links">
                         <a href="https://github.com/kesyaaclaraa" class="social-link" target="_blank">GitHub</a>
                         <a href="https://linkedin.com/" class="social-link" target="_blank">LinkedIn</a>
                         <a href="mailto:kesyaclara02@gmail.com" class="social-link">Email</a>
                     </div>
+                </div>
+
+                <!-- Foto Frame Polaroid Bertumpuk -->
+                <div class="hero-photo-frame">
+                    <img src="{% static 'img/kesya.jpg' %}" alt="Photo of Kesya Clara">
+                    <div class="polaroid-label">Kesya C. ~ 2026 📸</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Skills / About -->
+        <section id="skills" style="margin-top: 3rem;">
+            <h2 style="font-family: var(--font-serif); font-style: italic; font-size: 2.2rem; text-align: center;">about & skills ★</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Web Development</h3>
+                    <p>Creating interactive, aesthetic, and responsive web applications using modern tech stacks.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Information Systems</h3>
+                    <p>Studying system architecture, business analytics, and digital logic design at Fasilkom UI.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Problem Solving</h3>
+                    <p>Translating complex algorithms and data structures into clean, efficient code solutions.</p>
                 </div>
             </div>
         </section>
@@ -57,7 +75,7 @@
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Kesya Clara. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
+            <p>crafted with ♡ by Kesya Clara &middot; Fasilkom UI 2026</p>
         </div>
     </footer>
 </body>

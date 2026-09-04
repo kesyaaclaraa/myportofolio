@@ -5,24 +5,26 @@
 }
 
 :root {
-    --ink: #1c1917;
-    --paper: #faf6f0;
-    --accent: #d95d39;
-    --accent-dark: #a8442a;
-    --line: #e3d9c9;
-    --text-muted: #6b6459;
-    --radius: 4px;
+    --bg-main: #d8d2cb;        /* Soft warm taupe background */
+    --card-cream: #f4efea;      /* Soft beige/cream ala kertas scrapbook */
+    --card-dark: #3a3636;       /* Charcoal slate */
+    --text-dark: #232020;       /* Charcoal hitam */
+    --text-light: #ffffff;
+    --text-muted: #7a736d;
+    --border-dark: #232020;     /* Border tegas gaya Y2K/scrapbook */
+    --font-hand: 'Caveat', cursive;
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Space Grotesk', sans-serif;
 }
 
 body {
-    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: var(--ink);
-    background-color: var(--paper);
-    line-height: 1.6;
-}
-
-h1, .brand {
-    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-family: var(--font-sans);
+    color: var(--text-dark);
+    background-color: var(--bg-main);
+    /* Pattern bintik halus ala kertas art paper */
+    background-image: radial-gradient(#b0a89e 1px, transparent 1px);
+    background-size: 20px 20px;
+    line-height: 1.5;
 }
 
 .container {
@@ -31,169 +33,265 @@ h1, .brand {
     padding: 0 1.5rem;
 }
 
-/* Header */
+/* Header Navbar Retro/Scrapbook */
 .site-header {
-    border-bottom: 1px solid var(--line);
+    background-color: var(--card-cream);
+    border: 2px solid var(--border-dark);
+    margin: 1.5rem auto;
+    border-radius: 12px;
+    max-width: 920px;
+    box-shadow: 4px 4px 0px var(--border-dark);
 }
 
 .site-header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 1.5rem;
+    padding: 0.8rem 1.5rem;
 }
 
 .brand {
-    font-size: 1.3rem;
+    font-family: var(--font-hand);
+    font-size: 1.8rem;
     font-weight: 700;
-    color: var(--ink);
+    color: var(--text-dark);
     text-decoration: none;
 }
 
 .site-header nav {
     display: flex;
-    gap: 2rem;
+    gap: 1.2rem;
 }
 
 .site-header nav a {
-    color: var(--ink);
+    color: var(--text-dark);
     text-decoration: none;
-    font-size: 0.95rem;
-}
-
-/* Hero Section */
-.hero {
-    padding: 4.5rem 0 5rem;
-}
-
-.hero-grid {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr;
-    grid-template-areas:
-        "identity photo"
-        "details photo";
-    gap: 1.5rem 3rem;
-}
-
-.hero-identity {
-    grid-area: identity;
-}
-
-.hero-details {
-    grid-area: details;
-}
-
-.hero-kicker {
     font-size: 0.85rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent-dark);
     font-weight: 700;
-    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    transition: transform 0.2s;
+}
+
+.site-header nav a:hover {
+    transform: scale(1.1) rotate(-2deg);
+}
+
+/* Hero Scrapbook Banner */
+.hero {
+    padding: 2rem 0;
+}
+
+.hero-card {
+    background-color: var(--card-cream);
+    border: 2px solid var(--border-dark);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    position: relative;
+    box-shadow: 6px 6px 0px var(--border-dark);
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+/* Stiker Decorative / Cute Accents */
+.sticker {
+    position: absolute;
+    font-family: var(--font-hand);
+    font-size: 1.4rem;
+    background: #e2dad2;
+    border: 1.5px solid var(--border-dark);
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    box-shadow: 2px 2px 0px var(--border-dark);
+}
+
+.sticker-top {
+    top: -15px;
+    left: 40px;
+    transform: rotate(-4deg);
+}
+
+.sticker-ribbon {
+    top: -12px;
+    right: 40px;
+    transform: rotate(6deg);
+    background: #4a4543;
+    color: var(--text-light);
 }
 
 .hero-identity h1 {
-    font-size: clamp(3rem, 7vw, 5rem);
-    line-height: 0.95;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.handwriting-sub {
+    font-family: var(--font-hand);
+    font-size: 1.8rem;
+    color: #5c554e;
+    margin-bottom: 1rem;
+    display: block;
 }
 
 .bio {
-    color: var(--text-muted);
-    max-width: 480px;
+    font-size: 0.95rem;
+    color: #444;
     margin-bottom: 1.5rem;
 }
 
-.meta-list {
-    display: flex;
+/* Photo Frame dengan Tipe Polaroid / Sticker */
+.hero-photo-frame {
+    position: relative;
+    background: #ffffff;
+    padding: 12px 12px 40px 12px;
+    border: 2px solid var(--border-dark);
+    border-radius: 4px;
+    box-shadow: 5px 5px 0px var(--border-dark);
+    transform: rotate(3deg);
+    transition: transform 0.3s ease;
+}
+
+.hero-photo-frame:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+.hero-photo-frame img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+}
+
+.polaroid-label {
+    font-family: var(--font-hand);
+    font-size: 1.3rem;
+    text-align: center;
+    margin-top: 8px;
+    color: var(--text-dark);
+}
+
+/* Skills Section (Charcoal Scrapbook Cards) */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.skill-card {
+    background-color: var(--card-dark);
+    color: var(--text-light);
+    border: 2px solid var(--border-dark);
+    padding: 1.8rem;
+    border-radius: 12px;
+    box-shadow: 5px 5px 0px var(--border-dark);
+    position: relative;
+    transform: rotate(-1deg);
+    transition: transform 0.2s ease;
+}
+
+.skill-card:nth-child(even) {
+    transform: rotate(1.5deg);
+}
+
+.skill-card:hover {
+    transform: translateY(-4px) rotate(0deg);
+}
+
+.skill-card h3 {
+    font-family: var(--font-sans);
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.skill-card p {
+    color: #d1ccc6;
+    font-size: 0.9rem;
+}
+
+/* Projects / Portfolio Grid (Tape & Collage Style) */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    margin-bottom: 1.5rem;
+    margin-top: 2rem;
 }
 
-.meta-row dt {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+.project-card {
+    background-color: var(--card-cream);
+    border: 2px solid var(--border-dark);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 5px 5px 0px var(--border-dark);
+    position: relative;
+}
+
+/* Aksesori Solasi / Washi Tape di Atas Kartu */
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 30%;
+    width: 80px;
+    height: 20px;
+    background-color: rgba(210, 200, 190, 0.7);
+    border: 1px dashed var(--border-dark);
+    transform: rotate(-2deg);
+}
+
+.project-tag {
+    font-family: var(--font-hand);
+    font-size: 1.2rem;
     color: var(--text-muted);
-    margin-bottom: 0.15rem;
 }
 
-.meta-row dd {
-    font-weight: 600;
+.project-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
 }
 
-.social-links {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+.project-card p {
+    font-size: 0.9rem;
+    color: #555;
 }
 
+/* Buttons */
 .social-link {
     display: inline-block;
+    font-family: var(--font-sans);
+    font-weight: 700;
     font-size: 0.85rem;
-    font-weight: 600;
+    text-transform: uppercase;
     text-decoration: none;
-    color: var(--paper);
-    background-color: var(--ink);
-    border-radius: var(--radius);
-    padding: 0.5rem 1.1rem;
-    transition: background-color 0.2s ease;
+    color: var(--text-light);
+    background-color: var(--card-dark);
+    border: 2px solid var(--border-dark);
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    box-shadow: 3px 3px 0px var(--border-dark);
+    transition: all 0.2s ease;
 }
 
 .social-link:hover {
-    background-color: var(--accent);
-}
-
-/* Hero Photo */
-.hero-photo {
-    grid-area: photo;
-    align-self: flex-start;
-    position: relative;
-    width: 100%;
-    max-width: 320px;
-}
-
-.photo-block {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    width: 100%;
-    height: 100%;
-    background-color: var(--accent);
-    border-radius: var(--radius);
-    z-index: 0;
-}
-
-.avatar {
-    position: relative;
-    z-index: 1;
-    display: block;
-    width: 100%;
-    height: 320px;
-    object-fit: cover;
-    background-color: #eee;
-    border-radius: var(--radius);
-    border: 3px solid var(--ink);
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px var(--border-dark);
 }
 
 /* Footer */
 .site-footer {
-    padding: 1.5rem;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--line);
+    text-align: center;
+    padding: 2.5rem 0;
+    font-family: var(--font-hand);
+    font-size: 1.3rem;
+    color: var(--text-dark);
 }
 
-/* Mobile View */
-@media (max-width: 600px) {
-    .hero-grid {
+/* Responsif Mobile */
+@media (max-width: 768px) {
+    .hero-card {
         grid-template-columns: 1fr;
-        grid-template-areas:
-            "identity"
-            "photo"
-            "details";
-    }
-
-    .hero-photo {
-        max-width: 220px;
     }
 }
