@@ -1,81 +1,4 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kesya Clara Dania - Portfolio</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <header class="site-header">
-        <div class="container">
-            <a href="#profile" class="brand">Kesya Clara Dania</a>
-            <nav>
-                <a href="#profile">Profile</a>
-                <a href="#skills">Skills</a>
-                <a href="#experience">Experience</a>
-            </nav>
-        </div>
-    </header>
-
-    <main class="container">
-        <!-- Hero Section -->
-        <section class="hero fade-in" id="profile">
-            <div class="hero-card">
-                <div class="hero-identity">
-                    <span class="kicker">Information Systems Student</span>
-                    <h1>Kesya Clara Dania</h1>
-                    <p class="bio">
-                        Highly motivated Information Systems student at Universitas Indonesia with hands-on experience in coordinating student events and collaborating with diverse teams. Passionate about technology, digital transformation, and continuous learning.
-                    </p>
-                    <div class="social-links">
-                        <a href="mailto:kesyaclara02@gmail.com" class="social-link">Email</a>
-                        <a href="https://github.com/kesyaaclaraa" class="social-link" target="_blank">GitHub</a>
-                        <a href="https://line.me/ti/p/~kesyaaclaraa" class="social-link" target="_blank">LINE</a>
-                        <a href="tel:082126362360" class="social-link">Phone</a>
-                    </div>
-                </div>
-
-                <div class="hero-photo-frame">
-                    <img src="{% static 'img/kesya.jpg' %}" alt="Photo of Kesya Clara Dania">
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="fade-in" style="margin-top: 2rem;">
-            <h2 class="section-title">Skills & Background</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <h3>Technical Skills</h3>
-                    <div class="skill-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">Java</span>
-                        <span class="tag">Google Workspace</span>
-                        <span class="tag">Figma</span>
-                        <span class="tag">Canva</span>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <h3>Languages & Interests</h3>
-                    <div class="skill-tags">
-                        <span class="tag">English</span>
-                        <span class="tag">Bahasa Indonesia</span>
-                        <span class="tag">Sports</span>
-                        <span class="tag">Technology</span>
-                        <span class="tag">Volunteering</span>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <h3>Education</h3>
-                    <p style="font-size: 0.9rem; font-weight: 600; color: var(--primary-dark);">Universitas Indonesia</p>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Undergraduate Computer Science (2025 – Present)</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Experience Section -->
+<!-- Experience Section -->
         <section id="experience" class="fade-in" style="margin-top: 2rem;">
             <h2 class="section-title">Organizational Experience</h2>
             <div class="experience-list">
@@ -114,9 +37,15 @@
                         <li>Managed internal and external stakeholder communications to support event execution and participant engagement.</li>
                         <li>Facilitated coordination between committee divisions and external partners to maintain seamless operations.</li>
                     </ul>
-                    <div class="exp-gallery">
-                        <div class="img-container">
-                            <img src="{% static 'img/experience/sdgsummit.jpg' %}" alt="UI SDG Summit Activity">
+                    <div class="exp-gallery-custom">
+                        <div class="gallery-top-row">
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/sdgsummit1.jpg' %}" alt="UI SDG Summit 1"></div>
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/sdgsummit2.jpg' %}" alt="UI SDG Summit 2"></div>
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/sdgsummit3.jpg' %}" alt="UI SDG Summit 3"></div>
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/sdgsummit4.jpg' %}" alt="UI SDG Summit 4"></div>
+                        </div>
+                        <div class="gallery-bottom-large">
+                            <div class="img-container-large"><img src="{% static 'img/experience/sdgsummit_main.jpg' %}" alt="UI SDG Summit Main"></div>
                         </div>
                     </div>
                 </div>
@@ -135,9 +64,15 @@
                         <li>Coordinated participant schedules, logistics, and event activities to ensure smooth execution.</li>
                         <li>Assisted participants by addressing inquiries, resolving issues, and providing on-site support.</li>
                     </ul>
-                    <div class="exp-gallery">
-                        <div class="img-container">
-                            <img src="{% static 'img/experience/openhouse.jpg' %}" alt="Open House Fasilkom UI Activity">
+                    <div class="exp-gallery-custom">
+                        <div class="gallery-top-row">
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/openhouse1.jpg' %}" alt="Open House Fasilkom UI 1"></div>
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/openhouse2.jpg' %}" alt="Open House Fasilkom UI 2"></div>
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/openhouse3.jpg' %}" alt="Open House Fasilkom UI 3"></div>
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/openhouse4.jpg' %}" alt="Open House Fasilkom UI 4"></div>
+                        </div>
+                        <div class="gallery-bottom-large">
+                            <div class="img-container-large"><img src="{% static 'img/experience/openhouse_main.jpg' %}" alt="Open House Fasilkom UI Main"></div>
                         </div>
                     </div>
                 </div>
@@ -155,9 +90,15 @@
                         <li>Collaborated with cross-functional teams to manage event logistics, schedules, and participant coordination.</li>
                         <li>Monitored event progress and resolved operational issues to support successful event delivery.</li>
                     </ul>
-                    <div class="exp-gallery">
-                        <div class="img-container">
-                            <img src="{% static 'img/experience/gelarkarya.jpg' %}" alt="Gelar Karya UI Activity">
+                    <div class="exp-gallery-custom">
+                        <div class="gallery-top-row">
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/gelarkarya1.jpg' %}" alt="Gelar Karya UI 1"></div>
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/gelarkarya2.jpg' %}" alt="Gelar Karya UI 2"></div>
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/gelarkarya3.jpg' %}" alt="Gelar Karya UI 3"></div>
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/gelarkarya4.jpg' %}" alt="Gelar Karya UI 4"></div>
+                        </div>
+                        <div class="gallery-bottom-large">
+                            <div class="img-container-large"><img src="{% static 'img/experience/gelarkarya_main.jpg' %}" alt="Gelar Karya UI Main"></div>
                         </div>
                     </div>
                 </div>
@@ -174,21 +115,18 @@
                     <ul class="exp-bullets">
                         <li>Took part in discussions and workshops on Sustainable Development Goals, gaining insights into global issues and collaborative solutions.</li>
                     </ul>
-                    <div class="exp-gallery">
-                        <div class="img-container">
-                            <img src="{% static 'img/experience/sdgs.jpg' %}" alt="SDGs Forum FPU Activity">
+                    <div class="exp-gallery-custom">
+                        <div class="gallery-top-row">
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/sdgs1.jpg' %}" alt="SDGs Forum 1"></div>
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/sdgs2.jpg' %}" alt="SDGs Forum 2"></div>
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/sdgs3.jpg' %}" alt="SDGs Forum 3"></div>
+                            <div class="img-container-portrait"><img src="{% static 'img/experience/sdgs4.jpg' %}" alt="SDGs Forum 4"></div>
+                        </div>
+                        <div class="gallery-bottom-large">
+                            <div class="img-container-large"><img src="{% static 'img/experience/sdgs_main.jpg' %}" alt="SDGs Forum Main"></div>
                         </div>
                     </div>
                 </div>
 
             </div>
         </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 Kesya Clara Dania. Faculty of Computer Science, Universitas Indonesia.</p>
-        </div>
-    </footer>
-</body>
-</html>
