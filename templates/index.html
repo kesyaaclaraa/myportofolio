@@ -4,17 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kesya Clara Dania - Portfolio</title>
+    <title>{{ name }} - Portfolio</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="#profile" class="brand">Kesya Clara Dania</a>
+            <a href="{% url 'main:show_main' %}" class="brand">{{ name }}</a>
             <nav>
-                <a href="#profile">Profile</a>
-                <a href="#skills">Skills</a>
-                <a href="#experience">Experience</a>
+                <a href="{% url 'main:show_main' %}">Profile</a>
+                <a href="{% url 'main:show_experience' %}">Experience</a>
             </nav>
         </div>
     </header>
@@ -25,10 +24,8 @@
             <div class="hero-card">
                 <div class="hero-identity">
                     <span class="kicker">Information Systems Student</span>
-                    <h1>Kesya Clara Dania</h1>
-                    <p class="bio">
-                        Highly motivated Information Systems student at Universitas Indonesia with hands-on experience in coordinating student events and collaborating with diverse teams. Passionate about technology, digital transformation, and continuous learning.
-                    </p>
+                    <h1>{{ name }}</h1>
+                    <p class="bio">{{ bio }}</p>
                     <div class="social-links">
                         <a href="mailto:kesyaclara02@gmail.com" class="social-link">Email</a>
                         <a href="https://github.com/kesyaaclaraa" class="social-link" target="_blank">GitHub</a>
@@ -38,7 +35,7 @@
                 </div>
 
                 <div class="hero-photo-frame">
-                    <img src="{% static 'img/kesya.jpg' %}" alt="Photo of Kesya Clara Dania">
+                    <img src="{% static 'img/kesya.jpg' %}" alt="Photo of {{ name }}">
                 </div>
             </div>
         </section>
@@ -74,120 +71,11 @@
                 </div>
             </div>
         </section>
-
-        <!-- Experience Section -->
-        <section id="experience" class="fade-in" style="margin-top: 2rem;">
-            <h2 class="section-title">Organizational Experience</h2>
-            <div class="experience-list">
-
-                <!-- Compfest 18 -->
-                <div class="exp-card">
-                    <div class="exp-header">
-                        <div>
-                            <div class="exp-role">VPIC</div>
-                            <div class="exp-org">FnB Compfest 18</div>
-                        </div>
-                        <span class="exp-date">Jan 2026 – Present</span>
-                    </div>
-                    <ul class="exp-bullets">
-                        <li>Led the planning and execution of food and beverage operations for committee activities and event days.</li>
-                        <li>Coordinated with vendors and internal divisions to manage procurement and logistics efficiently.</li>
-                        <li>Oversaw budgeting and inventory while ensuring smooth operations and timely delivery.</li>
-                    </ul>
-                    <div class="exp-gallery">
-                        <div class="img-container">
-                            <img src="{% static 'img/experience/compfest.jpg' %}" alt="FnB Compfest 18 Activity">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- HR STAFF UISS -->
-                <div class="exp-card">
-                    <div class="exp-header">
-                        <div>
-                            <div class="exp-role">Human Relations Staff</div>
-                            <div class="exp-org">UI SDGs Summit</div>
-                        </div>
-                        <span class="exp-date">2026</span>
-                    </div>
-                    <ul class="exp-bullets">
-                        <li>Managed internal and external stakeholder communications to support event execution and participant engagement.</li>
-                        <li>Facilitated coordination between committee divisions and external partners to maintain seamless operations.</li>
-                    </ul>
-                    <div class="exp-gallery">
-                        <div class="img-container">
-                            <img src="{% static 'img/experience/sdgsummit.jpg' %}" alt="UI SDGs Summit">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Expert Staff Open House Fasilkom UI -->
-                <div class="exp-card">
-                    <div class="exp-header">
-                        <div>
-                            <div class="exp-role">Expert Staff & Staff - Liaison Officer</div>
-                            <div class="exp-org">Open House Fasilkom UI</div>
-                        </div>
-                        <span class="exp-date">Aug 2025 – Present</span>
-                    </div>
-                    <ul class="exp-bullets">
-                        <li>Served as primary point of contact between participants and organizing committee.</li>
-                        <li>Coordinated participant schedules, logistics, and event activities to ensure smooth execution.</li>
-                        <li>Assisted participants by addressing inquiries, resolving issues, and providing on-site support.</li>
-                    </ul>
-                    <div class="exp-gallery">
-                        <div class="img-container">
-                            <img src="{% static 'img/experience/openhouse.jpg' %}" alt="Open House Fasilkom UI">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Managing Gelar Karya UI -->
-                <div class="exp-card">
-                    <div class="exp-header">
-                        <div>
-                            <div class="exp-role">Managing</div>
-                            <div class="exp-org">Gelar Karya UI | BEM Fasilkom UI</div>
-                        </div>
-                        <span class="exp-date">Sep 2025 – Nov 2025</span>
-                    </div>
-                    <ul class="exp-bullets">
-                        <li>Collaborated with cross-functional teams to manage event logistics, schedules, and participant coordination.</li>
-                        <li>Monitored event progress and resolved operational issues to support successful event delivery.</li>
-                    </ul>
-                    <div class="exp-gallery">
-                        <div class="img-container">
-                            <img src="{% static 'img/experience/gelarkarya.jpg' %}" alt="Gelar Karya UI">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Participant SDGs Forum FPU -->
-                <div class="exp-card">
-                    <div class="exp-header">
-                        <div>
-                            <div class="exp-role">Participant</div>
-                            <div class="exp-org">SDGs Forum FPU</div>
-                        </div>
-                        <span class="exp-date">March 2025</span>
-                    </div>
-                    <ul class="exp-bullets">
-                        <li>Took part in discussions and workshops on Sustainable Development Goals, gaining insights into global issues and collaborative solutions.</li>
-                    </ul>
-                    <div class="exp-gallery">
-                        <div class="img-container">
-                            <img src="{% static 'img/experience/sdgs.jpg' %}" alt="SDGs Forum FPU">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
     </main>
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Kesya Clara Dania. Faculty of Computer Science, Universitas Indonesia.</p>
+            <p>&copy; 2026 {{ name }}. Faculty of Computer Science, Universitas Indonesia.</p>
         </div>
     </footer>
 </body>
