@@ -13,6 +13,10 @@ from main.forms import ExperienceForm, ProjectForm
 from main.models import Experience, Project
 
 
+def is_editor(user):
+    return user.is_authenticated and user.groups.filter(name="Editor").exists()
+
+
 def show_main(request):
     last_login = request.COOKIES.get(
         "last_login", "Belum ada sesi login / Cookie tidak ditemukan"
@@ -72,7 +76,9 @@ def logout_user(request):
 
 
 def get_experience_json(request):
-    experience_json = serializers.serialize("json", Experience.objects.all())
+    experience_json = serializers.serialize(
+        "json", Experience.objects.all(), use_natural_foreign_keys=True
+    )
     return HttpResponse(experience_json, content_type="application/json")
 
 
@@ -87,6 +93,7 @@ def show_experience(request):
     context = {
         "name": "Kesya",
         "experience_list": experience_list,
+        "is_editor": is_editor(request.user),
     }
     return render(request, "experience.html", context)
 
@@ -113,7 +120,7 @@ def create_experience(request):
 
 @login_required(login_url="/login/")
 def update_experience(request, experience_id):
-    if not request.user.is_superuser:
+    if not (request.user.is_superuser or is_editor(request.user)):
         raise PermissionDenied
 
     experience = get_object_or_404(Experience, pk=experience_id)
@@ -144,6 +151,20 @@ def delete_experience(request, experience_id):
         experience.delete()
         messages.success(request, "Pengalaman berhasil dihapus!")
         return redirect("main:show_experience")
+
+    return redirect("main:show_experience")
+
+
+# Tanpa cek is_superuser/editor: semua akun yang sudah login boleh memberi star
+@login_required(login_url="/login/")
+def toggle_star_experience(request, experience_id):
+    experience = get_object_or_404(Experience, pk=experience_id)
+
+    if request.method == "POST":
+        if request.user in experience.starred_by.all():
+            experience.starred_by.remove(request.user)
+        else:
+            experience.starred_by.add(request.user)
 
     return redirect("main:show_experience")
 
