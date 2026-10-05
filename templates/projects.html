@@ -83,16 +83,6 @@
             gridContainer.classList.toggle('hide', !showGrid);
         }
 
-        // Mengubah karakter khusus HTML menjadi entity agar ditampilkan sebagai teks
-        function escapeHtml(value) {
-            return String(value ?? '')
-                .replaceAll('&', '&amp;')
-                .replaceAll('<', '&lt;')
-                .replaceAll('>', '&gt;')
-                .replaceAll('"', '&quot;')
-                .replaceAll("'", '&#39;');
-        }
-
         // Membuat elemen card project
         function buildProjectCardElement(item) {
             const project = item.fields;
@@ -102,7 +92,7 @@
             articleElement.className = 'content-card';
 
             const linkHtml = project.link
-                ? `<a href="${escapeHtml(project.link)}" class="card-link" target="_blank">Lihat Proyek</a>`
+                ? `<a href="${escapeHtml(safeUrl(project.link))}" class="card-link" target="_blank" rel="noopener noreferrer">Lihat Proyek</a>`
                 : '';
 
             // Dummy UUID digunakan untuk digantikan oleh ID asli dari data JSON
@@ -216,22 +206,6 @@
         const CREATE_PROJECT_ENDPOINT = "{% url 'main:create_project_ajax' %}";
         const projectForm = document.getElementById('project-form');
 
-        // Membaca nilai cookie, digunakan untuk mengambil token CSRF
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-
         // Mengirim data form ke server
         async function addProject(event) {
             event.preventDefault();
@@ -253,10 +227,7 @@
                     showToast('Berhasil', 'Proyek baru berhasil ditambahkan!', 'success');
                     fetchProjects(searchInput.value.trim());
                 } else {
-                    const errorMessages = result.errors
-                        ? Object.values(result.errors).flat().map(error => error.message)
-                        : [result.message || `Terjadi kesalahan (status ${response.status}).`];
-                    showToast('Gagal menambahkan proyek', errorMessages.join(' '), 'error');
+                    showToast('Gagal menambahkan proyek', formatServerErrors(result, response.status), 'error');
                 }
             } catch (error) {
                 console.error('Error adding project:', error);

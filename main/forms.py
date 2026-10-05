@@ -104,3 +104,17 @@ class ExperienceForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["ended_at"].input_formats = ["%Y-%m-%dT%H:%M"]
+
+    # strip_tags membuang tag HTML (mis. <img onerror=...>) sebelum data disimpan,
+    # sebagai lapisan kedua di samping escaping saat data ditampilkan.
+    def clean_title(self):
+        title = strip_tags(self.cleaned_data["title"]).strip()
+        if not title:
+            raise ValidationError("Judul pengalaman tidak boleh hanya berisi tag HTML.")
+        return title
+
+    def clean_description(self):
+        description = strip_tags(self.cleaned_data["description"]).strip()
+        if not description:
+            raise ValidationError("Deskripsi tidak boleh kosong atau hanya berisi tag HTML.")
+        return description

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block meta %}
     <title>Experience - {{ name }}</title>
@@ -13,52 +14,99 @@
                 <div class="project-header">
                     <h1>Experience</h1>
                     {% if user.is_superuser %}
-                        <a href="{% url 'main:create_experience' %}" class="button project-add-button">
+                        <button type="button"
+                                class="button project-add-button"
+                                popovertarget="add-experience-modal">
                             <span aria-hidden="true">+</span>
                             Tambah Experience
-                        </a>
+                        </button>
                     {% endif %}
                 </div>
 
-                <div class="card-grid">
-                    {% for experience in experience_list %}
-                        <article class="content-card">
-                            {% if experience.thumbnail %}
-                                <img src="{{ experience.thumbnail }}"
-                                     alt="{{ experience.title }}"
-                                     class="card-thumbnail">
-                            {% endif %}
-                            <span class="card-category">
-                                {{ experience.get_category_display }}
-                            </span>
-                            <h2>{{ experience.title }}</h2>
-                            <p class="card-description">
-                                {{ experience.description }}
-                            </p>
+                <form id="experience-search-form" class="project-search" role="search">
+                    <input type="search"
+                           id="experience-search-input"
+                           name="title"
+                           value="{{ title_query }}"
+                           placeholder="Cari berdasarkan judul pengalaman"
+                           class="project-search__input"
+                           aria-label="Cari berdasarkan judul pengalaman"
+                           autocomplete="off">
+                    <select id="experience-category-filter"
+                            name="category"
+                            class="project-search__input project-search__select"
+                            aria-label="Filter kategori">
+                        <option value="">Semua kategori</option>
+                        {% for value, label in category_choices %}
+                            <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="button">Cari</button>
+                </form>
 
-                            {% if experience.is_ongoing %}
-                                <p class="card-status">Sedang berlangsung</p>
-                            {% else %}
-                                <p class="card-status">Selesai</p>
-                            {% endif %}
+                <p id="experience-result-count" class="result-count" aria-live="polite"></p>
 
-                            <div class="card-actions">
-                                {% include "components/experience_star.html" with experience=experience %}
-                                {% if user.is_superuser or is_editor %}
-                                    <a href="{% url 'main:update_experience' experience.id %}" class="button button-secondary">Edit</a>
-                                {% endif %}
-                                {% if user.is_superuser %}
-                                    {% include "components/experience_delete_modal.html" with experience=experience %}
-                                {% endif %}
-                            </div>
-                        </article>
-                    {% empty %}
-                        <p class="empty-state">
-                            Belum ada pengalaman yang ditambahkan.
-                        </p>
-                    {% endfor %}
+                <!-- Loading State -->
+                <div id="experience-loading" class="empty-state hide" role="status">
+                    <span class="spinner" aria-hidden="true"></span>
+                    <p>Memuat pengalaman...</p>
                 </div>
+
+                <!-- Error State -->
+                <div id="experience-error" class="empty-state hide" role="alert">
+                    <p>Gagal memuat data pengalaman. Silakan coba lagi.</p>
+                    <button type="button" id="experience-retry" class="button">Coba Lagi</button>
+                </div>
+
+                <!-- Empty State -->
+                <div id="experience-empty" class="empty-state hide">
+                    <p id="experience-empty-message">Belum ada pengalaman yang ditambahkan.</p>
+                </div>
+
+                <!-- Experience Grid -->
+                <div id="experience-grid" class="card-grid hide"></div>
             </div>
         </section>
     </main>
+
+    {% if user.is_superuser %}
+        {% include "components/experience_form_modal.html" %}
+
+        <!-- Satu modal konfirmasi hapus yang dipakai bersama oleh semua card -->
+        <div id="delete-experience-modal"
+             class="project-delete-modal"
+             popover="auto"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="delete-experience-modal-title">
+            <button type="button"
+                    class="project-delete-modal__backdrop"
+                    popovertarget="delete-experience-modal"
+                    popovertargetaction="hide"
+                    aria-label="Tutup konfirmasi hapus"></button>
+            <div class="project-delete-modal__content">
+                <button type="button"
+                        class="project-delete-modal__close"
+                        popovertarget="delete-experience-modal"
+                        popovertargetaction="hide"
+                        aria-label="Tutup konfirmasi hapus">&times;</button>
+                <h2 id="delete-experience-modal-title">Hapus Pengalaman?</h2>
+                <p>
+                    Apakah Anda yakin ingin menghapus
+                    <strong id="delete-experience-name"></strong>?
+                </p>
+                <div class="project-delete-modal__actions">
+                    <button type="button"
+                            class="button button-secondary"
+                            popovertarget="delete-experience-modal"
+                            popovertargetaction="hide">Batal</button>
+                    <button type="button" id="delete-experience-confirm" class="button button-danger">Ya, Hapus</button>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {# Konfigurasi untuk experience.js; json_script meng-escape nilainya dengan aman #}
+    {{ experience_config|json_script:"experience-config" }}
+    <script src="{% static 'js/experience.js' %}"></script>
 {% endblock content %}
