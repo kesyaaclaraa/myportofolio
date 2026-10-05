@@ -3,6 +3,49 @@ NPM : 2506656892
 Kelas : PBP C
 Update untuk latihan branching
 
+## Tentang Proyek
+
+Website portofolio pribadi berbasis **Django 5.2** yang berisi halaman **Profile**, **Experience**, dan **Projects**. Pengunjung dapat membaca seluruh data tanpa login; akun yang sudah login dapat memberi *star*; peran **Editor** dapat mengubah Experience; dan **superuser** (pemilik portofolio) dapat menambah dan menghapus data.
+
+## Menjalankan Secara Lokal
+
+```bash
+git clone https://github.com/kesyaaclaraa/myportofolio.git
+cd myportofolio
+python -m venv env
+source env/bin/activate        # Windows: env\Scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser   # akun pemilik portofolio
+python manage.py runserver
+```
+
+Buka `http://127.0.0.1:8000/`. Untuk peran Editor, buat grup bernama `Editor` di Django Admin (`/admin/`) lalu masukkan akun ke grup tersebut. Jalankan seluruh test dengan `python manage.py test main`.
+
+## Progres Mingguan
+
+| Minggu | Fitur |
+| --- | --- |
+| Tugas 1 | Halaman profil statis dengan HTML5 semantik dan CSS responsif |
+| Tugas 2 | Model `Experience` dan `Project`, halaman dinamis dengan routing, unit test |
+| Tugas 3 | `base.html`, form `ModelForm` untuk CRUD Experience, endpoint JSON |
+| Tugas 4 | Register/login/logout, cookie `last_login`, peran superuser & Editor, fitur *star* |
+| Tugas 5 | Halaman Experience dimuat lewat AJAX, pencarian dengan *debouncing*, modal tambah data, toast, perlindungan XSS |
+
+### Detail Tugas 5 (Experience)
+
+| Fitur | Lokasi |
+| --- | --- |
+| Endpoint JSON manual (`JsonResponse`) berisi `star_count`, `is_starred`, `starred_by_names`; filter `?title=` dan `?category=` | `get_experience_json` di `main/views.py`, `GET /api/experience/` |
+| Halaman hanya merender kerangka + state *loading* / kosong / *error* (dengan tombol "Coba Lagi") | `templates/experience.html` |
+| Pencarian judul dengan *debouncing* 300 ms + filter kategori; request lama dibatalkan dengan `AbortController` | `static/js/experience.js` |
+| Form tambah di dalam modal (Popover API), dikirim dengan `fetch()` + `FormData` + header `X-CSRFToken` | `templates/components/experience_form_modal.html`, `create_experience_ajax` |
+| Status HTTP: `201` berhasil, `400` validasi gagal (pesan error per field), `403` bukan superuser, `405` bukan POST | `create_experience_ajax` |
+| Toast sukses/gagal, termasuk pesan validasi dari server | `static/js/toast.js`, `formatServerErrors` di `static/js/utils.js` |
+| `escapeHtml` untuk setiap teks dan `safeUrl` untuk setiap URL yang disisipkan lewat JavaScript | `static/js/utils.js` |
+| `strip_tags` di `clean_title` dan `clean_description` | `ExperienceForm` di `main/forms.py` |
+| Fitur ekstra: *star*/unstar dan hapus (dengan modal konfirmasi) tanpa reload, error validasi tampil di bawah field, jumlah hasil pencarian, filter tersimpan di URL | `toggle_star_experience_ajax`, `delete_experience_ajax`, `static/js/experience.js` |
+
 ###  Tugas 1
 
 #### 1. Penggunaan Elemen Semantik HTML5
@@ -94,4 +137,37 @@ Tanpa `makemigrations`, Django tidak tahu ada perubahan model yang perlu direkam
 
 2. JSON lebih disukai dibandingkan XML dalam pengembangan aplikasi web modern karena beberapa alasan: **sintaksnya lebih ringkas** (tidak perlu closing tag seperti XML), sehingga ukuran payload lebih kecil dan lebih cepat dikirim lewat jaringan; **strukturnya memetakan langsung ke tipe data pada bahasa pemrograman** seperti objek, array, string, angka, dan boolean, sehingga di JavaScript (dan bahasa lain) JSON bisa langsung diubah menjadi objek native tanpa parsing tambahan yang rumit (`JSON.parse()` vs. DOM parser XML yang lebih berat); serta **lebih mudah dibaca manusia** dan didukung secara native oleh hampir semua bahasa pemrograman dan framework modern, termasuk Django (`django.core.serializers`) dan browser (`fetch().json()`). XML masih dipakai di beberapa kasus lama (misalnya SOAP, konfigurasi tertentu), tetapi untuk pertukaran data API web modern JSON jauh lebih efisien dan sederhana.
 
-3. Ketika fungsi *view* seperti `get_experience_json` (atau `get_projects_json`) dipanggil, alurnya adalah: (1) *view* mengambil data dari database melalui Django ORM (`Experience.objects.all()`), yang hasilnya berupa QuerySet berisi objek-objek model Python; (2) objek model tersebut **tidak bisa langsung dikembalikan** sebagai response HTTP karena bukan format teks yang dipahami klien, sehingga perlu melalui proses **serialization**, yaitu `serializers.serialize("json", queryset)`, yang mengubah setiap objek model beserta field-fieldnya menjadi struktur data JSON (teks); (3) hasil JSON tersebut dibungkus dalam `HttpResponse` dengan `content_type="application/json"` dan dikirim ke klien; (4) di sisi lain, saat halaman seperti `show_experience` ingin menampilkan data yang sama, ia memanggil endpoint JSON tersebut lalu melakukan **deserialization** (`serializers.deserialize("json", ...)`) untuk mengubah teks JSON itu kembali menjadi objek model Python yang bisa diakses atributnya (`experience.title`, `experience.is_ongoing`, dst.) di template. Proses serialization diperlukan karena objek model Django menyimpan referensi ke koneksi database dan metode-metode Python yang tidak bisa dikirim lewat jaringan sebagai teks; serialization menjembatani representasi internal (objek Python) dengan representasi eksternal yang portabel dan universal (teks JSON) agar data bisa dipertukarkan antar sistem, disimpan, atau dikonsumsi oleh klien mana pun (browser, aplikasi mobile, dsb.) tanpa bergantung pada implementasi internal Django.
+3. Ketika fungsi *view* seperti `get_experience_json` (atau `get_projects_json`) dipanggil, alurnya adalah: 
+(1) *view* mengambil data dari database melalui Django ORM (`Experience.objects.all()`), yang hasilnya berupa QuerySet berisi objek-objek model Python; 
+(2) objek model tersebut **tidak bisa langsung dikembalikan** sebagai response HTTP karena bukan format teks yang dipahami klien, sehingga perlu melalui proses **serialization**, yaitu `serializers.serialize("json", queryset)`, yang mengubah setiap objek model beserta field-fieldnya menjadi struktur data JSON (teks); 
+(3) hasil JSON tersebut dibungkus dalam `HttpResponse` dengan `content_type="application/json"` dan dikirim ke klien; 
+(4) di sisi lain, saat halaman seperti `show_experience` ingin menampilkan data yang sama, ia memanggil endpoint JSON tersebut lalu melakukan **deserialization** (`serializers.deserialize("json", ...)`) untuk mengubah teks JSON itu kembali menjadi objek model Python yang bisa diakses atributnya (`experience.title`, `experience.is_ongoing`, dst.) di template. Proses serialization diperlukan karena objek model Django menyimpan referensi ke koneksi database dan metode-metode Python yang tidak bisa dikirim lewat jaringan sebagai teks; serialization menjembatani representasi internal (objek Python) dengan representasi eksternal yang portabel dan universal (teks JSON) agar data bisa dipertukarkan antar sistem, disimpan, atau dikonsumsi oleh klien mana pun (browser, aplikasi mobile, dsb.) tanpa bergantung pada implementasi internal Django.
+
+---
+
+### Tugas 5
+
+1. ***Debouncing*** adalah teknik menunda eksekusi sebuah fungsi sampai suatu *event* berhenti terjadi selama jeda waktu tertentu. Pada fitur pencarian, setiap ketikan memicu *event* `input`; tanpa *debouncing*, mengetik "asisten" akan mengirim 7 request AJAX (`a`, `as`, `asi`, ...) padahal hanya hasil terakhir yang dibutuhkan. Dengan *debouncing*, setiap ketikan me-*reset* timer (`clearTimeout` lalu `setTimeout`), sehingga request baru dikirim setelah pengguna berhenti mengetik selama 300 ms. Ini penting karena (a) mengurangi beban server dan query database yang sia-sia, (b) menghemat kuota jaringan pengguna, dan (c) mencegah *race condition*, yaitu respons request lama yang datang terlambat menimpa hasil pencarian yang lebih baru. Di halaman Experience, kasus (c) juga dicegah dengan `AbortController` yang membatalkan request sebelumnya setiap kali request baru dikirim.
+
+2. `fetch()` bersifat asinkron: ia langsung mengembalikan sebuah **Promise**, bukan data, karena respons dari server baru tiba beberapa saat kemudian. `await` membuat fungsi `async` "menunggu" Promise tersebut selesai (*resolved*) lalu mengambil nilainya, tanpa memblokir *thread* utama browser sehingga halaman tetap responsif. Pada kode kita, `await` dipakai dua kali: `const response = await fetch(url)` untuk menunggu header respons (status 200/400/403 dapat dicek lewat `response.ok`/`response.status`), lalu `await response.json()` untuk menunggu *body* selesai diunduh dan di-*parse*. Jika `await` tidak dipakai, variabel `response` berisi objek Promise yang masih *pending*, sehingga `response.ok` bernilai `undefined` dan `response.json` bukan fungsi (TypeError). Kode setelahnya pun akan berjalan duluan sebelum data datang, misalnya menampilkan state "kosong" padahal data belum dimuat. Selain itu, error jaringan tidak akan tertangkap oleh blok `try...catch`, karena *rejection* Promise baru terjadi setelah blok tersebut selesai dieksekusi.
+
+3. **XSS (*Cross-Site Scripting*)** adalah serangan di mana penyerang menyisipkan kode (biasanya JavaScript) ke dalam data yang kemudian ditampilkan di halaman milik pengguna lain, sehingga kode tersebut berjalan dengan hak akses situs kita. Contohnya, judul `<img src="x" onerror="alert('XSS!')">` yang dirender sebagai HTML akan menjalankan `onerror`. Penyerang dapat memakainya untuk mencuri cookie/sesi, melakukan aksi atas nama korban, atau mengubah tampilan halaman. Template Django **otomatis meng-*escape*** setiap `{{ variabel }}` (mengubah `<` menjadi `&lt;`, dst.), sehingga data tampil sebagai teks biasa kecuali developer sengaja mematikannya dengan `|safe`. Sebaliknya, saat data dari AJAX disisipkan lewat JavaScript, **tidak ada *auto-escaping***: properti seperti `innerHTML` dan *template literal* akan mem-*parse* string apa adanya sebagai HTML. Karena itu tanggung jawab *escaping* sepenuhnya ada pada developer, dan cukup satu field yang lupa di-*escape* untuk membuka celah. Di proyek ini, pertahanannya dibuat berlapis: (a) di server, `strip_tags` pada `clean_title`/`clean_description` membuang tag HTML sebelum data disimpan, dan input yang isinya hanya tag akan ditolak dengan status 400; (b) di klien, setiap teks melewati `escapeHtml` (atau `textContent`) sebelum masuk ke HTML; dan (c) setiap URL (thumbnail, link) melewati `safeUrl` karena skema `javascript:` tetap berbahaya walaupun karakternya sudah di-*escape*.
+
+#### Pengujian Tugas 5
+
+* `python manage.py test main`: 22 test lulus, termasuk status 201/400/403/405, penolakan request tanpa token CSRF, *star* (401 untuk pengunjung anonim), hapus, dan payload XSS `<img src="x" onerror="alert('XSS!')">` (ditolak dengan 400 jika isinya hanya tag; tag dibuang jika bercampur teks).
+* Smoke test dengan `runserver`: `/`, `/experience/`, `/projects/`, `/api/experience/`, dan file statis JS mengembalikan 200; POST tanpa login mendapat 403 (tambah) dan 401 (*star*).
+
+#### Deklarasi Penggunaan AI (Tugas 5)
+
+* **Tools:** Claude Code (model Claude Opus 5.5) di VS Code, dengan akses ke repositori, terminal, dan *test runner*.
+* **Strategi prompting:** Saya memberikan PDF soal Tugas 5 beserta rubriknya, lalu meminta AI melanjutkan kode Tutorial 5 dan menerapkan polanya pada bagian Experience. AI diminta membaca kode yang sudah ada terlebih dahulu (`views.py`, `forms.py`, `projects.html`, `toast.js`, CSS) agar mengikuti pola dan gaya penamaan yang sama, lalu mengerjakannya bertahap di branch `feat/tugas-5-experience-ajax` dengan satu *commit* per langkah (*conventional commits*).
+* **Prompt yang digunakan:**
+  > Lanjutkan tutorial kmrn dengan mengerjakan tugas tugas ini dengan menyelesaikan seluruh rubik penilaiannya *(dengan lampiran PDF soal Tugas 5)*
+* **Bagian yang dibantu AI:** pemindahan `escapeHtml`/`getCookie` ke `static/js/utils.js`; `serialize_experience`, `get_experience_json`, `create_experience_ajax`, `toggle_star_experience_ajax`, dan `delete_experience_ajax`; `clean_title`/`clean_description`; `templates/experience.html`, modal form, dan `static/js/experience.js`; CSS tambahan; test di `main/tests.py`; serta draf jawaban reflektif di atas.
+* **Analisis kritis dan koreksi selama pengerjaan:**
+  * Penggantian teks otomatis yang dilakukan AI pada `main/urls.py` ikut mengubah baris di dalam `path(...)` dan membuat `manage.py check` gagal (`kwargs argument must be a dict`). Kesalahan ini tertangkap karena setiap langkah langsung diverifikasi dengan `check`/test, bukan diasumsikan benar.
+  * Versi awal kartu menampilkan rentang `started_at – ended_at`. Saat data asli dicek lewat `/api/experience/`, muncul rentang "Sep 2026 – Mar 2025" karena `started_at` memakai `auto_now_add` (tanggal data dibuat, bukan tanggal mulai pengalaman). Tampilannya lalu diubah menjadi status + tanggal selesai saja. Kesalahan semantik seperti ini tidak terdeteksi oleh test; harus dicek dengan data nyata.
+  * Pengguna non-superuser tidak mendapat `{% csrf_token %}` di halaman, sehingga cookie `csrftoken` bisa tidak ada saat mereka menekan *star*. Ini ditangani dengan `@ensure_csrf_cookie` pada `show_experience` dan dibuktikan dengan test.
+  * Dua test Projects sudah gagal sejak Tutorial 5 (halaman Projects berpindah ke AJAX) tanpa disadari. Test tersebut diperbarui agar memeriksa endpoint JSON.
+  * **Keterbatasan:** lingkungan AI tidak memiliki Node.js atau browser *headless*, sehingga JavaScript tidak bisa dieksekusi otomatis. Interaksi di browser (modal, toast, *debouncing*, *star*, hapus, dan uji `alert` XSS) harus diuji manual di browser untuk peran anonim, user biasa, Editor, dan superuser. AI hanya bisa memverifikasi sisi server (test dan respons HTTP).
