@@ -7,6 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 
@@ -119,11 +120,27 @@ def get_experience_json(request):
 @ensure_csrf_cookie
 def show_experience(request):
     # Halaman hanya merender kerangka; data dimuat lewat fetch() ke get_experience_json
+    placeholder_id = "00000000-0000-0000-0000-000000000000"
+    experience_config = {
+        "urls": {
+            "list": reverse("main:get_experience_json"),
+            "create": reverse("main:create_experience_ajax"),
+            "login": reverse("main:login"),
+            # placeholder_id diganti dengan pk asli di JavaScript
+            "star": reverse("main:toggle_star_experience_ajax", args=[placeholder_id]),
+            "delete": reverse("main:delete_experience_ajax", args=[placeholder_id]),
+            "edit": reverse("main:update_experience", args=[placeholder_id]),
+        },
+        "placeholderId": placeholder_id,
+        "isAuthenticated": request.user.is_authenticated,
+        "canEdit": request.user.is_superuser or is_editor(request.user),
+        "canDelete": request.user.is_superuser,
+    }
     context = {
         "name": "Kesya",
         "title_query": request.GET.get("title", "").strip(),
         "category_choices": Experience.EXPERIENCE_CHOICES,
-        "can_edit": request.user.is_superuser or is_editor(request.user),
+        "experience_config": experience_config,
         "form": ExperienceForm(),
     }
     return render(request, "experience.html", context)

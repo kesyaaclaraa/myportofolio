@@ -874,3 +874,71 @@ body {
 .toast-success { border-left: 4px solid #22c55e; }
 .toast-error { border-left: 4px solid #b42318; }
 .toast-normal { border-left: 4px solid var(--primary-maroon); }
+
+/* Experience (AJAX): filter kategori, jumlah hasil, periode, loading */
+.project-search__select {
+    width: auto;
+    min-width: 11rem;
+    cursor: pointer;
+}
+
+.result-count {
+    margin: -0.75rem 0 1rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.result-count:empty {
+    display: none;
+}
+
+.card-period {
+    margin-top: 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.card-period + .card-status {
+    margin-top: 0.25rem;
+}
+
+#experience-loading:not(.hide),
+#experience-error:not(.hide) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 2rem 0;
+}
+
+.spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid var(--maroon-light);
+    border-top-color: var(--primary-maroon);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spinner { animation-duration: 2.4s; }
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: progress;
+}
+
+.form-group [aria-invalid="true"] {
+    border-color: #b42318;
+}
+
+@media (max-width: 600px) {
+    .project-search__select {
+        width: 100%;
+    }
+}
