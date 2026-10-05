@@ -875,7 +875,7 @@ body {
 .toast-error { border-left: 4px solid #b42318; }
 .toast-normal { border-left: 4px solid var(--primary-maroon); }
 
-/* Experience (AJAX): filter kategori, jumlah hasil, periode, loading */
+/* Experience (AJAX): filter kategori, jumlah hasil, loading */
 .project-search__select {
     width: auto;
     min-width: 11rem;
@@ -890,16 +890,6 @@ body {
 
 .result-count:empty {
     display: none;
-}
-
-.card-period {
-    margin-top: 0.75rem;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-}
-
-.card-period + .card-status {
-    margin-top: 0.25rem;
 }
 
 #experience-loading:not(.hide),

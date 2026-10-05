@@ -64,10 +64,11 @@
             : '';
     }
 
-    function formatPeriod(fields) {
-        const start = dateFormatter.format(new Date(fields.started_at));
-        const end = fields.ended_at ? dateFormatter.format(new Date(fields.ended_at)) : 'Sekarang';
-        return `${start} – ${end}`;
+    // started_at diisi otomatis saat data dibuat (auto_now_add), bukan tanggal mulai
+    // pengalaman sebenarnya, jadi yang ditampilkan hanya status dan tanggal selesai.
+    function formatStatus(fields) {
+        if (fields.is_ongoing) return 'Sedang berlangsung';
+        return `Selesai · ${dateFormatter.format(new Date(fields.ended_at))}`;
     }
 
     // Membuat elemen card. Setiap nilai teks dari server melewati escapeHtml,
@@ -116,8 +117,7 @@
             <span class="card-category">${escapeHtml(exp.category_display)}</span>
             <h2>${escapeHtml(exp.title)}</h2>
             <p class="card-description">${escapeHtml(exp.description)}</p>
-            <p class="card-period">${escapeHtml(formatPeriod(exp))}</p>
-            <p class="card-status">${exp.is_ongoing ? 'Sedang berlangsung' : 'Selesai'}</p>
+            <p class="card-status">${escapeHtml(formatStatus(exp))}</p>
             <div class="card-actions">
                 ${starHtml}
                 ${editHtml}
