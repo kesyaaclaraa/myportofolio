@@ -216,3 +216,129 @@ class ExperienceEditorAPITest(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("description", response.data)
+
+    def test_search_by_title_and_category_query_params(self):
+        Experience.objects.create(title="Panitia PMB", description="Koordinator", category="volunteer")
+        titles = [item["title"] for item in self.client.get(self.list_url, {"title": "ASISTEN"}).data]
+        self.assertEqual(titles, ["Asisten Dosen"])
+        titles = [item["title"] for item in self.client.get(self.list_url, {"category": "volunteer"}).data]
+        self.assertEqual(titles, ["Panitia PMB"])
+        response = self.client.get(self.list_url, {"title": "tidak-ada"})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, [])
+
+    def test_missing_experience_returns_404(self):
+        self.client.force_authenticate(user=self.owner)
+        url = reverse("api:experience-detail", args=[uuid.uuid4()])
+        self.assertEqual(self.client.get(url).status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(self.client.patch(url, {"title": "X"}, format="json").status_code, 404)
+        self.assertEqual(self.client.delete(url).status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_validation_errors_return_400_per_field(self):
+        self.client.force_authenticate(user=self.owner)
+        for changes, field in [
+            ({"title": "   "}, "title"),
+            ({"title": "<script></script>"}, "title"),
+            ({"description": "<b></b>"}, "description"),
+            ({"thumbnail": "javascript:alert(1)"}, "thumbnail"),
+            ({"category": "bukan-kategori"}, "category"),
+            ({"ended_at": "bukan-tanggal"}, "ended_at"),
+        ]:
+            response = self.client.post(self.list_url, {**self.payload, **changes}, format="json")
+            self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST, changes)
+            self.assertIn(field, response.data)
+        self.assertEqual(Experience.objects.count(), 1)
+
+    def test_text_input_is_stripped_of_tags(self):
+        self.client.force_authenticate(user=self.editor)
+        response = self.client.patch(
+            self.detail_url,
+            {"title": '<img src=x onerror="alert(1)">Asdos', "description": "<b>Tebal</b>"},
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.experience.refresh_from_db()
+        self.assertEqual(self.experience.title, "Asdos")
+        self.assertEqual(self.experience.description, "Tebal")
+
+    def test_editor_invalid_patch_does_not_change_database(self):
+        self.client.force_authenticate(user=self.editor)
+        response = self.client.patch(self.detail_url, {"title": ""}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.experience.refresh_from_db()
+        self.assertEqual(self.experience.title, "Asisten Dosen")
+
+    def test_guest_cannot_star(self):
+        response = self.client.post(self.star_url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(self.experience.starred_by.count(), 0)
+
+    def test_star_toggles_for_request_user_only(self):
+        self.client.force_authenticate(user=self.visitor)
+        # Field lain di body diabaikan: akun pemberi star selalu request.user
+        response = self.client.post(self.star_url, {"user": self.owner.id}, format="json")
+        self.assertTrue(response.data["is_starred"])
+        self.assertEqual(list(self.experience.starred_by.all()), [self.visitor])
+        response = self.client.post(self.star_url)
+        self.assertFalse(response.data["is_starred"])
+        self.assertEqual(response.data["star_count"], 0)
+
+    def test_star_rejects_get(self):
+        self.client.force_authenticate(user=self.visitor)
+        self.assertEqual(self.client.get(self.star_url).status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_computed_fields_are_read_only_and_no_sensitive_data(self):
+        self.experience.starred_by.add(self.visitor)
+        self.client.force_authenticate(user=self.owner)
+        response = self.client.patch(self.detail_url, {
+            "star_count": 99, "is_starred": True, "starred_by_names": "forged",
+            "is_ongoing": False, "starred_by": [self.owner.id],
+        }, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["star_count"], 1)
+        self.assertFalse(response.data["is_starred"])
+        self.assertEqual(list(self.experience.starred_by.all()), [self.visitor])
+        self.assertNotIn("starred_by", response.data)
+        self.assertNotIn("password", str(response.data))
+        self.assertNotIn("email", str(response.data))
+
+    def test_session_write_without_csrf_is_rejected(self):
+        client = APIClient(enforce_csrf_checks=True)
+        self.assertTrue(client.login(username="editor", password="test-password"))
+        response = client.patch(self.detail_url, {"title": "Tanpa CSRF"}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.experience.refresh_from_db()
+        self.assertEqual(self.experience.title, "Asisten Dosen")
+
+    def test_session_write_with_csrf_succeeds(self):
+        client = APIClient(enforce_csrf_checks=True)
+        self.assertTrue(client.login(username="editor", password="test-password"))
+        # Halaman Experience memakai @ensure_csrf_cookie sehingga cookie csrftoken diset
+        client.get(reverse("main:show_experience"))
+        token = client.cookies["csrftoken"].value
+        response = client.patch(
+            self.detail_url, {"title": "Dengan CSRF"}, format="json", HTTP_X_CSRFTOKEN=token,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.experience.refresh_from_db()
+        self.assertEqual(self.experience.title, "Dengan CSRF")
+
+    def test_browsable_api_opens(self):
+        response = self.client.get(self.list_url, HTTP_ACCEPT="text/html")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, "Asisten Dosen")
+
+    def test_page_uses_drf_api_and_edit_modal_per_role(self):
+        page_url = reverse("main:show_experience")
+        for user, has_edit, has_add in [
+            (None, False, False), (self.visitor, False, False),
+            (self.editor, True, False), (self.owner, True, True),
+        ]:
+            if user:
+                self.client.force_login(user)
+            else:
+                self.client.logout()
+            response = self.client.get(page_url)
+            self.assertContains(response, reverse("api:experience-list"))
+            self.assertEqual('id="edit-experience-modal"' in response.content.decode(), has_edit)
+            self.assertEqual('id="add-experience-modal"' in response.content.decode(), has_add)

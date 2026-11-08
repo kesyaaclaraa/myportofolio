@@ -106,6 +106,11 @@
         </div>
     {% endif %}
 
+    {% if can_edit %}
+        {# Superuser dan Editor dapat mengubah data lewat PATCH ke API #}
+        {% include "components/experience_edit_modal.html" %}
+    {% endif %}
+
     {# Konfigurasi untuk experience.js; json_script meng-escape nilainya dengan aman #}
     {{ experience_config|json_script:"experience-config" }}
     <script src="{% static 'js/experience.js' %}"></script>

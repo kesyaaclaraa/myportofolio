@@ -20,7 +20,7 @@
         <h2 id="add-experience-modal-title">Tambah Pengalaman Baru</h2>
         <form id="experience-form"
               method="post"
-              action="{% url 'main:create_experience_ajax' %}"
+              action="{% url 'api:experience-list' %}"
               class="project-form"
               novalidate>
             {% csrf_token %}
