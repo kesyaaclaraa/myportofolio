@@ -119,21 +119,21 @@ def get_experience_json(request):
 # {% csrf_token %} (mis. untuk pengunjung non-superuser yang hanya bisa memberi star)
 @ensure_csrf_cookie
 def show_experience(request):
-    # Halaman hanya merender kerangka; data dimuat lewat fetch() ke get_experience_json
+    # Halaman hanya merender kerangka; data dimuat lewat fetch() ke API DRF /api/v1/experience/
     placeholder_id = "00000000-0000-0000-0000-000000000000"
+    can_edit = request.user.is_superuser or is_editor(request.user)
     experience_config = {
         "urls": {
-            "list": reverse("main:get_experience_json"),
-            "create": reverse("main:create_experience_ajax"),
+            "list": reverse("api:experience-list"),
             "login": reverse("main:login"),
-            # placeholder_id diganti dengan pk asli di JavaScript
-            "star": reverse("main:toggle_star_experience_ajax", args=[placeholder_id]),
-            "delete": reverse("main:delete_experience_ajax", args=[placeholder_id]),
-            "edit": reverse("main:update_experience", args=[placeholder_id]),
+            # placeholder_id diganti dengan id asli di JavaScript
+            "detail": reverse("api:experience-detail", args=[placeholder_id]),
+            "star": reverse("api:experience-star", args=[placeholder_id]),
         },
         "placeholderId": placeholder_id,
         "isAuthenticated": request.user.is_authenticated,
-        "canEdit": request.user.is_superuser or is_editor(request.user),
+        # Hanya untuk menampilkan tombol; izin sebenarnya diperiksa permission class di API
+        "canEdit": can_edit,
         "canDelete": request.user.is_superuser,
     }
     context = {
@@ -141,7 +141,10 @@ def show_experience(request):
         "title_query": request.GET.get("title", "").strip(),
         "category_choices": Experience.EXPERIENCE_CHOICES,
         "experience_config": experience_config,
+        "can_edit": can_edit,
         "form": ExperienceForm(),
+        # auto_id berbeda agar id input modal edit tidak bentrok dengan modal tambah
+        "edit_form": ExperienceForm(auto_id="edit_%s"),
     }
     return render(request, "experience.html", context)
 

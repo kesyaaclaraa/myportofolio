@@ -1,0 +1,42 @@
+<div id="edit-experience-modal"
+     class="project-form-modal"
+     popover="auto"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="edit-experience-modal-title">
+    <button type="button"
+            class="project-form-modal__backdrop"
+            popovertarget="edit-experience-modal"
+            popovertargetaction="hide"
+            aria-label="Tutup form ubah pengalaman"></button>
+
+    <div class="project-form-modal__content">
+        <button type="button"
+                class="project-form-modal__close"
+                popovertarget="edit-experience-modal"
+                popovertargetaction="hide"
+                aria-label="Tutup form ubah pengalaman">&times;</button>
+
+        <h2 id="edit-experience-modal-title">Ubah Pengalaman</h2>
+        {# Dikirim lewat fetch() dengan method PATCH ke /api/v1/experience/<id>/ #}
+        <form id="edit-experience-form" class="project-form" novalidate>
+            {% for field in edit_form %}
+                <div class="form-group" data-field="{{ field.name }}">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.name == "ended_at" %}
+                        <p class="form-help">Kosongkan jika pengalaman masih berlangsung.</p>
+                    {% endif %}
+                    <p class="form-error hide" data-error-for="{{ field.name }}"></p>
+                </div>
+            {% endfor %}
+            <div class="project-form-modal__actions">
+                <button type="button"
+                        class="button button-secondary"
+                        popovertarget="edit-experience-modal"
+                        popovertargetaction="hide">Batal</button>
+                <button type="submit" class="button">Simpan Perubahan</button>
+            </div>
+        </form>
+    </div>
+</div>
