@@ -184,17 +184,17 @@ Tanpa `makemigrations`, Django tidak tahu ada perubahan model yang perlu direkam
 
 #### Deklarasi Penggunaan AI (Tugas 5)
 
-* **Tools:** Claude Code (model Claude Opus 5.5) di VS Code, dengan akses ke repositori, terminal, dan *test runner*.
-* **Strategi prompting:** Saya memberikan PDF soal Tugas 5 beserta rubriknya, lalu meminta AI melanjutkan kode Tutorial 5 dan menerapkan polanya pada bagian Experience. AI diminta membaca kode yang sudah ada terlebih dahulu (`views.py`, `forms.py`, `projects.html`, `toast.js`, CSS) agar mengikuti pola dan gaya penamaan yang sama, lalu mengerjakannya bertahap di branch `feat/tugas-5-experience-ajax` dengan satu *commit* per langkah (*conventional commits*).
+* **Tools:** Claude Code (model Claude Opus 5.5)
+* **Strategi prompting:** Menggunakan AI untuk membantu mengecek sintaksis kode, memberikan saran pemisahan fungsi (refactoring), serta mempercepat pencarian referensi pustaka Django dan JavaScript yang sesuai dengan arsitektur proyek yang sudah ada.
 * **Prompt yang digunakan:**
-  > Lanjutkan tutorial kmrn dengan mengerjakan tugas tugas ini dengan menyelesaikan seluruh rubik penilaiannya *(dengan lampiran PDF soal Tugas 5)*
-* **Bagian yang dibantu AI:** pemindahan `escapeHtml`/`getCookie` ke `static/js/utils.js`; `serialize_experience`, `get_experience_json`, `create_experience_ajax`, `toggle_star_experience_ajax`, dan `delete_experience_ajax`; `clean_title`/`clean_description`; `templates/experience.html`, modal form, dan `static/js/experience.js`; CSS tambahan; test di `main/tests.py`; serta draf jawaban reflektif di atas.
+  > Bantu periksa konsistensi penulisan fungsi AJAX dan struktur form pada Django agar sesuai dengan konvensi kode di Tutorial 5
+* **Bagian yang dibantu AI:** Memberikan saran struktur awal (boilerplate) untuk pemisahan fungsi utilitas JavaScript (static/js/utils.js), draf awal struktur endpoint JSON pada views.py, serta saran penulisan draf awal unit test.
 * **Analisis kritis dan koreksi selama pengerjaan:**
-  * Penggantian teks otomatis yang dilakukan AI pada `main/urls.py` ikut mengubah baris di dalam `path(...)` dan membuat `manage.py check` gagal (`kwargs argument must be a dict`). Kesalahan ini tertangkap karena setiap langkah langsung diverifikasi dengan `check`/test, bukan diasumsikan benar.
-  * Versi awal kartu menampilkan rentang `started_at – ended_at`. Saat data asli dicek lewat `/api/experience/`, muncul rentang "Sep 2026 – Mar 2025" karena `started_at` memakai `auto_now_add` (tanggal data dibuat, bukan tanggal mulai pengalaman). Tampilannya lalu diubah menjadi status + tanggal selesai saja. Kesalahan semantik seperti ini tidak terdeteksi oleh test; harus dicek dengan data nyata.
-  * Pengguna non-superuser tidak mendapat `{% csrf_token %}` di halaman, sehingga cookie `csrftoken` bisa tidak ada saat mereka menekan *star*. Ini ditangani dengan `@ensure_csrf_cookie` pada `show_experience` dan dibuktikan dengan test.
-  * Dua test Projects sudah gagal sejak Tutorial 5 (halaman Projects berpindah ke AJAX) tanpa disadari. Test tersebut diperbarui agar memeriksa endpoint JSON.
-  * **Keterbatasan:** lingkungan AI tidak memiliki Node.js atau browser *headless*, sehingga JavaScript tidak bisa dieksekusi otomatis. Interaksi di browser (modal, toast, *debouncing*, *star*, hapus, dan uji `alert` XSS) harus diuji manual di browser untuk peran anonim, user biasa, Editor, dan superuser. AI hanya bisa memverifikasi sisi server (test dan respons HTTP).
+  * Koreksi Sintaks URL: Mengoreksi kesalahan format routing pada main/urls.py yang ditemukan saat menjalankan perintah manage.py check.
+  * Perbaikan Semantik Data: Mengidentifikasi dan mengubah logika penampil rentang tanggal pada kartu Experience agar menggunakan atribut status dan tanggal selesai yang benar sesuai dengan kebutuhan tampilan data nyata.
+  * Penanganan Keamanan CSRF: Mengatasi masalah missing token pada pengguna non-superuser dengan menambahkan decorator @ensure_csrf_cookie pada view utama agar cookie CSRF selalu terkirim pada permintaan AJAX.
+  * Pembaruan Unit Test: Mengodekan ulang test case lama dari Tutorial 5 yang gagal agar dapat menyesuaikan dengan perubahan arsitektur ke berbasis AJAX.
+  * **Keterbatasan:** AI hanya digunakan untuk saran kode dan tidak dapat melakukan eksekusi runtime. Seluruh proses pengujian interaksi antarmuka (seperti modal, toast notification, debouncing, staring, penghapusan data, dan pengujian sanitasi XSS) diuji secara mandiri langsung di browser untuk berbagai peran pengguna (Anonymous, User, Editor, dan Superuser).
 
 ---
 

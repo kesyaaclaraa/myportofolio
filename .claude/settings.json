@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git remote *)",
+      "Bash(awk -F= '{print $1\"=\"\\(length\\($2\\)>0?\"<set, len=\"length\\($2\\)\">\":\"<empty>\"\\)}' /Users/kesyaclara/myportofolio/.env.prod)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8000/projects/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8000/projects/add/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8000/api/projects/)",
+      "Bash(curl -s http://localhost:8000/api/projects/)",
+      "Bash(curl -s \"http://localhost:8000/projects/?title=nonexistent\")",
+      "Bash(git commit --amend -m ' *)",
+      "Bash(curl -s http://127.0.0.1:8765/experience/)",
+      "Bash(kill %1)",
+      "Bash(jobs)",
+      "Bash(rm -f /tmp/cookies.txt /tmp/runserver.log)",
+      "Bash(curl -s -b /tmp/cookies.txt http://127.0.0.1:8765/projects/)",
+      "Bash(curl -s http://127.0.0.1:8765/projects/)",
+      "Bash(curl -s -b /tmp/cookies.txt http://127.0.0.1:8765/)"
+    ]
+  }
+}
